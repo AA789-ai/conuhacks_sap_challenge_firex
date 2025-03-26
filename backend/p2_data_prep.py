@@ -3,56 +3,55 @@
 # added vectorization for better performance
 import pandas as pd
 import p2_fwi as fwi
+import numpy as np
 
 def create_fwi_features(df):
-   """handles sequential FWI system calculations for dataset"""
-   
-   # need timestamp order for proper calcs
-   df = df.sort_values('timestamp')
-   
-   # init starting conditions from standard values
-   df['FFMC'] = 85.0  # fine fuel moisture code
-   df['DMC'] = 6.0    # duff moisture code  
-   df['DC'] = 15.0    # drought code
-   
-   # need months for seasonal adjustments
-   months = df['timestamp'].dt.month
-   
-   # gotta do these ones in order since they depend on prev values
-   for i in range(1, len(df)):
-       # fine fuel moisture - fast response
-       df.iloc[i, df.columns.get_loc('FFMC')] = fwi.calculate_ffmc_vectorized(
-           df.iloc[i]['temperature'], 
-           df.iloc[i]['humidity'],
-           df.iloc[i]['wind_speed'],
-           df.iloc[i]['precipitation'],
-           df.iloc[i-1]['FFMC']
-       )
-       
-       # duff layer moisture - medium response
-       df.iloc[i, df.columns.get_loc('DMC')] = fwi.calculate_dmc_vectorized(
-           df.iloc[i]['temperature'],
-           df.iloc[i]['humidity'],
-           df.iloc[i]['precipitation'],
-           df.iloc[i-1]['DMC'],
-           months.iloc[i]
-       )
-       
-       # deep soil moisture - slow response
-       df.iloc[i, df.columns.get_loc('DC')] = fwi.calculate_dc_vectorized(
-           df.iloc[i]['temperature'],
-           df.iloc[i]['precipitation'],
-           df.iloc[i-1]['DC'],
-           months.iloc[i]
-       )
-   
-   # these ones can be done all at once - no dependencies
-   df['ISI'] = fwi.calculate_isi(df['FFMC'], df['wind_speed'])  # spread index
-   df['BUI'] = fwi.calculate_bui(df['DMC'], df['DC'])          # buildup index 
-   df['FWI'] = fwi.calculate_fwi(df['ISI'], df['BUI'])         # fire weather idx
-   df['DSR'] = fwi.calculate_dsr(df['FWI'])                    # daily severity
-   
-   return df
+    """Optimized FWI system calculations for dataset"""
+    
+    # Sort by timestamp first
+    df = df.sort_values('timestamp')
+    
+    # Create copies of the arrays we'll need
+    temperature = df['temperature'].values
+    humidity = df['humidity'].values
+    wind_speed = df['wind_speed'].values
+    precipitation = df['precipitation'].values
+    months = df['timestamp'].dt.month.values
+    
+    # Initialize FWI arrays with starting values
+    n = len(df)
+    ffmc = np.ones(n) * 85.0
+    dmc = np.ones(n) * 6.0
+    dc = np.ones(n) * 15.0
+    
+    # Calculate sequential indices using numpy operations
+    for i in range(1, n):
+        ffmc[i] = fwi.calculate_ffmc_vectorized(
+            temperature[i], humidity[i], wind_speed[i], 
+            precipitation[i], ffmc[i-1]
+        )
+        
+        dmc[i] = fwi.calculate_dmc_vectorized(
+            temperature[i], humidity[i], precipitation[i], 
+            dmc[i-1], months[i]
+        )
+        
+        dc[i] = fwi.calculate_dc_vectorized(
+            temperature[i], precipitation[i], dc[i-1], months[i]
+        )
+    
+    # Assign calculated values back to the DataFrame
+    df['FFMC'] = ffmc
+    df['DMC'] = dmc
+    df['DC'] = dc
+    
+    # Calculate the remaining indices all at once (already vectorized)
+    df['ISI'] = fwi.calculate_isi(df['FFMC'], df['wind_speed'])
+    df['BUI'] = fwi.calculate_bui(df['DMC'], df['DC'])
+    df['FWI'] = fwi.calculate_fwi(df['ISI'], df['BUI'])
+    df['DSR'] = fwi.calculate_dsr(df['FWI'])
+    
+    return df
 
 def prepare_data(env_data_path, fire_data_path):
    """preps environmental and fire data for modeling"""
