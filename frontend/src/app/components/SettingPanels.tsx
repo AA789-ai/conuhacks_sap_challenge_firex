@@ -28,6 +28,7 @@ interface SettingsPanelProps {
   // Callbacks to parent
   onSave: (newUnits: OperationalUnit[], newCosts: DamageCosts) => void;
   onReset: () => void;
+  onClose: () => void;
 }
 
 export default function SettingsPanel({
@@ -37,6 +38,8 @@ export default function SettingsPanel({
   defaultDamageCosts,
   onSave,
   onReset,
+  onClose,
+
 }: SettingsPanelProps) {
   // Keep local copies so user can edit before "Save"
   const [units, setUnits] = useState<OperationalUnit[]>(() => [...initialOperationalUnits]);
@@ -60,7 +63,9 @@ export default function SettingsPanel({
   // "Save" => notify parent
   const handleSaveClick = () => {
     onSave(units, costs);
+    onClose(); // 👈 Close after saving
   };
+  
 
   // "Reset" => revert to defaults, also notify parent
   const handleResetClick = () => {

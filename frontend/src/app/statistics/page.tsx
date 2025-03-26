@@ -170,11 +170,11 @@ export default function StatisticsPage() {
   return (
     <div
     className="
-      flex flex-col items-center space-y-8
+      flex flex-col items-center space-y-8 justify-center
       min-h-screen text-gray-900 p-6
       pt-16       /* So content doesn’t hide behind the mobile (top) navbar */
       lg:pt-6     /* (Optional) reduce top padding on medium+ screens */
-      lg:ml-64    /* So content doesn’t hide behind the sidebar on medium+ screens */
+      
     "
   >
       {/* Title */}
