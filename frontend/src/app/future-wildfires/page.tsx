@@ -1,17 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dynamic from "next/dynamic";
+
 
 // Leaflet components (dynamically loaded for Next.js)
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
 const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
 const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
+
 
 import L, { Map } from "leaflet";
 
@@ -27,6 +29,9 @@ type FirePrediction = {
 };
 
 export default function FutureWildfires() {
+  const startDateRef = useRef<any>(null);
+  const endDateRef = useRef<any>(null);
+
   const router = useRouter()
   const [firePredictions, setFirePredictions] = useState<{ [key: string]: FirePrediction[] }>({});
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -107,8 +112,10 @@ export default function FutureWildfires() {
   const highlightedFireIcon = new L.Icon({
     iconUrl: "/fire-icon.png",
     iconSize: [50, 50],
-    iconAnchor: [17.5, 17.5],
+    iconAnchor: [25, 25],
+    className: "blue-fire-icon" // Custom class for styling
   });
+  
 
   // Card click => focus map
   const handleCardClick = (date: string, index: number, location: { latitude: number; longitude: number }) => {
@@ -121,7 +128,7 @@ export default function FutureWildfires() {
   if (loading) {
     return (
       <motion.div
-        className="flex flex-col items-center justify-center h-screen bg-gray-50 text-gray-700"
+        className="flex flex-col items-center justify-center h-screen text-gray-700"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -172,7 +179,7 @@ export default function FutureWildfires() {
 
   // 3) Otherwise, we have data. Render the normal UI
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-6 ml-64">
+    <div className="flex flex-col items-center min-h-screen p-6 ">
       {/* Title & Date Filters */}
       <motion.h1
         className="text-4xl font-bold text-center mb-6"
@@ -185,12 +192,14 @@ export default function FutureWildfires() {
 
       <div className="mb-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
         <DatePicker
+          ref = {startDateRef}
           selected={startDate}
           onChange={setStartDate}
           placeholderText="Start Date"
           className="px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none"
         />
         <DatePicker
+          ref = {endDateRef}
           selected={endDate}
           onChange={setEndDate}
           placeholderText="End Date"
@@ -211,16 +220,31 @@ export default function FutureWildfires() {
       </div>
 
       {startDate && endDate && (
-        <motion.div
-          className="text-lg font-semibold text-gray-700 bg-white px-6 py-3 rounded-lg shadow-md"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Showing results from <span className="text-blue-600">{startDate.toLocaleDateString()}</span> 
-          to <span className="text-blue-600">{endDate.toLocaleDateString()}</span>
-        </motion.div>
-      )}
+  <div className="w-full flex justify-center my-6">
+    <motion.div
+      className="text-lg font-semibold text-gray-700 bg-white px-6 py-4 rounded-xl shadow-lg border border-gray-200"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      Showing results from{" "}
+      <button
+        className="text-blue-600 hover:underline focus:outline-none"
+        onClick={() => startDateRef.current?.setFocus()}
+      >
+        {startDate.toLocaleDateString()}
+      </button>{" "}
+      to{" "}
+      <button
+        className="text-blue-600 hover:underline focus:outline-none"
+        onClick={() => endDateRef.current?.setFocus()}
+      >
+        {endDate.toLocaleDateString()}
+      </button>
+    </motion.div>
+  </div>
+)}
+
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl w-full"
@@ -233,9 +257,9 @@ export default function FutureWildfires() {
             predictions.map((prediction, index) => (
               <motion.div
                 key={`${date}-${index}`}
-                className={`bg-white shadow-lg rounded-lg p-6 flex flex-col items-center w-full border ${
+                className={`bg-white shadow-lg rounded-lg p-6 flex flex-col items-center w-full border hover:bg-gray-200 cursor-pointer ${
                   selectedFire?.date === date && selectedFire?.index === index
-                    ? "border-4 border-blue-500 scale-105"
+                    ? "border-4 border-orange-500 scale-105"
                     : "border-gray-300"
                 }`}
                 onClick={() => handleCardClick(date, index, prediction.location)}

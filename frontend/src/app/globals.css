@@ -22,3 +22,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.leaflet-marker-icon.blue-fire-icon {
+  filter: hue-rotate(200deg) brightness(1.2);
+}

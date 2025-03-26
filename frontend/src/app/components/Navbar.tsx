@@ -30,7 +30,7 @@ export default function Navbar() {
               <Flame size={32} className="text-yellow-400" />
             </motion.div>
             <motion.span className="text-2xl font-bold" whileHover={{ scale: 1.1 }}>
-              Wildfirex
+              WildFireX
             </motion.span>
           </motion.div>
         </Link>
@@ -58,7 +58,7 @@ export default function Navbar() {
             transition={{ duration: 0.5 }}
           >
             <Flame size={28} className="text-yellow-400" />
-            <span className="text-xl font-bold">Wildfirex</span>
+            <span className="text-xl font-bold">WildFireX</span>
           </motion.div>
         </Link>
 

@@ -354,6 +354,7 @@ export default function UploadPage() {
             defaultDamageCosts={DEFAULT_DAMAGE_COSTS}
             onSave={handleSaveSettings}
             onReset={handleResetSettings}
+            onClose={() => setShowSettings(false)}
           />
         )}
 

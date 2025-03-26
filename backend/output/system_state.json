@@ -12,25 +12,25 @@
       "name": "fire_engines",
       "deployment_time_minutes": 60.0,
       "cost": 2000.0,
-      "total_units": 10,
-      "used_units": 10,
+      "total_units": 12,
+      "used_units": 12,
       "available_units": 0
     },
     "helicopters": {
       "name": "helicopters",
       "deployment_time_minutes": 45.0,
       "cost": 8000.0,
-      "total_units": 3,
-      "used_units": 3,
-      "available_units": 0
+      "total_units": 32,
+      "used_units": 7,
+      "available_units": 25
     },
     "tanker_planes": {
       "name": "tanker_planes",
       "deployment_time_minutes": 120.0,
       "cost": 15000.0,
       "total_units": 2,
-      "used_units": 2,
-      "available_units": 0
+      "used_units": 0,
+      "available_units": 2
     },
     "ground_crews": {
       "name": "ground_crews",
@@ -128,7 +128,7 @@
       "location": "44.5771,-73.4983",
       "severity": "high",
       "handled": true,
-      "assigned_resource": "ground_crews"
+      "assigned_resource": "fire_engines"
     },
     {
       "timestamp": "2024-04-04T05:00:00",
@@ -136,7 +136,7 @@
       "location": "44.8483,-73.7878",
       "severity": "low",
       "handled": true,
-      "assigned_resource": "ground_crews"
+      "assigned_resource": "fire_engines"
     },
     {
       "timestamp": "2024-04-04T20:00:00",
@@ -192,7 +192,7 @@
       "location": "44.422,-73.8217",
       "severity": "low",
       "handled": true,
-      "assigned_resource": "smoke_jumpers"
+      "assigned_resource": "ground_crews"
     },
     {
       "timestamp": "2024-08-15T16:00:00",
@@ -200,7 +200,7 @@
       "location": "44.9893,-72.9472",
       "severity": "high",
       "handled": true,
-      "assigned_resource": "smoke_jumpers"
+      "assigned_resource": "ground_crews"
     },
     {
       "timestamp": "2024-08-26T04:00:00",
@@ -232,7 +232,7 @@
       "location": "45.1302,-73.0222",
       "severity": "low",
       "handled": true,
-      "assigned_resource": "helicopters"
+      "assigned_resource": "smoke_jumpers"
     },
     {
       "timestamp": "2024-09-23T19:00:00",
@@ -240,7 +240,7 @@
       "location": "44.0927,-73.8376",
       "severity": "low",
       "handled": true,
-      "assigned_resource": "helicopters"
+      "assigned_resource": "smoke_jumpers"
     },
     {
       "timestamp": "2024-09-28T18:00:00",
@@ -256,7 +256,7 @@
       "location": "44.7212,-73.1703",
       "severity": "medium",
       "handled": true,
-      "assigned_resource": "tanker_planes"
+      "assigned_resource": "helicopters"
     },
     {
       "timestamp": "2024-10-27T07:00:00",
@@ -264,39 +264,39 @@
       "location": "44.0144,-73.8114",
       "severity": "medium",
       "handled": true,
-      "assigned_resource": "tanker_planes"
+      "assigned_resource": "helicopters"
     },
     {
       "timestamp": "2024-11-14T06:00:00",
       "fire_start_time": "2024-11-14T05:40:00",
       "location": "44.4543,-73.5505",
       "severity": "medium",
-      "handled": false,
-      "assigned_resource": null
+      "handled": true,
+      "assigned_resource": "helicopters"
     },
     {
       "timestamp": "2024-11-18T20:00:00",
       "fire_start_time": "2024-11-18T19:57:00",
       "location": "45.1862,-72.7336",
       "severity": "low",
-      "handled": false,
-      "assigned_resource": null
+      "handled": true,
+      "assigned_resource": "helicopters"
     },
     {
       "timestamp": "2024-12-16T20:00:00",
       "fire_start_time": "2024-12-16T19:01:00",
       "location": "45.2517,-73.3938",
       "severity": "high",
-      "handled": false,
-      "assigned_resource": null
+      "handled": true,
+      "assigned_resource": "helicopters"
     },
     {
       "timestamp": "2024-12-23T03:00:00",
       "fire_start_time": "2024-12-23T02:50:00",
       "location": "44.6085,-73.0306",
       "severity": "high",
-      "handled": false,
-      "assigned_resource": null
+      "handled": true,
+      "assigned_resource": "helicopters"
     }
   ],
   "damage_costs": {
@@ -304,18 +304,18 @@
     "medium": 100000,
     "high": 200000
   },
-  "operational_costs": 123000.0,
-  "missed_response_costs": 550000,
+  "operational_costs": 129000.0,
+  "missed_response_costs": 0,
   "statistics": {
     "addressed": {
-      "low": 13,
-      "medium": 10,
-      "high": 5
+      "low": 14,
+      "medium": 11,
+      "high": 7
     },
     "missed": {
-      "low": 1,
-      "medium": 1,
-      "high": 2
+      "low": 0,
+      "medium": 0,
+      "high": 0
     }
   }
 }
