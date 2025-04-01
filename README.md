@@ -208,3 +208,21 @@ Required columns:
 - `human_activity_index`: Human activity level
 - `latitude`: Location latitude
 - `longitude`: Location longitude
+
+## Screenshots
+
+![wildfirex0](https://github.com/user-attachments/assets/cd81d6cd-4f51-420b-8dbc-764474bb5235)
+![wildfirex1](https://github.com/user-attachments/assets/91008979-fc87-4c91-82b9-3e7fc7063eff)
+![wildfirex2](https://github.com/user-attachments/assets/43bec530-4fc8-44bd-a115-4191ead4b539)
+![wildfirex3](https://github.com/user-attachments/assets/17ef7834-5637-47bf-b375-204078187f35)
+![wildfirex4](https://github.com/user-attachments/assets/5606ce30-9986-42d7-ad6f-9ec48b8d492f)
+![wildfirex5](https://github.com/user-attachments/assets/90c53a4b-21c6-4ced-bfda-61ed6deb1faa)
+![wildfirex6](https://github.com/user-attachments/assets/6b720c4f-3d43-4216-b72a-a088aeed8414)
+![wildfirex7](https://github.com/user-attachments/assets/eb998b18-7549-48d7-a46c-046ca5bc0420)
+
+
+
+
+
+
+
