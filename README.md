@@ -1,11 +1,11 @@
-# ConUHacks 2025 1st place SAP challenge winner
+# WildFireX : ConUHacks 2025 1st place SAP challenge winner
 
 | Authors |
 |------|
 |[AA789-ai](https://github.com/AA789-ai)|
 |[Abdul-RehmanCU](https://github.com/Abdul-RehmanCU)|
 
-# Wildfire Resource Deployer & Predictor
+# WildFireX: Wildfire Resource Deployer & Predictor
 
 A comprehensive application for analyzing wildfire data, tracking operational efficiency, visualizing key statistics, and predicting potential wildfire events through an interactive dashboard.
 
